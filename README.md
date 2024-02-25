@@ -132,3 +132,16 @@ class cbv_list(ListView):
     ```python
     from django.contrib.auth.forms import AuthenticationForm
     ```
+
+### 📌 다대일 - ForeignKey
+```python
+writer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) # User 다대일 관계 
+```
+* on_delete : ForeignKey 필드가 참조하는 객체가 삭제될 때 어떻게 동작할지를 지정
+    * `models.CASCADE`: 참조하는 객체가 삭제될 때, 해당 객체와 연결된 모든 객체도 함께 삭제
+    * `models.PROTECT`: 참조하는 객체가 삭제될 때, 참조하는 객체와 연결된 객체가 있는 경우 삭제를 방지
+    * `models.SET_NULL`: 참조하는 객체가 삭제될 때, 해당 필드를 NULL로 설정 (해당 필드가 null을 허용해야 함)
+    * `models.SET_DEFAULT`: 참조하는 객체가 삭제될 때, 기본값으로 설정된 값으로 필드를 설정
+    * `models.SET()`: 참조하는 객체가 삭제될 때, 특정 함수를 실행하여 값을 설정
+    
+![alt text](image.png)

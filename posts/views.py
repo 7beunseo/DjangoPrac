@@ -28,7 +28,8 @@ def create(request):
         post = Post.objects.create(
             title = request.POST.get('title'),
             content = request.POST.get('content'),
-            writer = request.POST.get('writer')
+            # 현재 유저
+            writer = request.user
         )
         post.save()
         return redirect('posts-fbv')
