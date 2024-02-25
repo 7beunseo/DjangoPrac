@@ -107,3 +107,28 @@ class cbv_list(ListView):
 * detail
     * `앱명/모델명_detail.html`
     * `모델명` 로 쿼리 사용 (ex {% post.id %})
+
+### 📌 로그인 & 회원가입 & 로그아웃
+
+#### 💫 User 모델 생성
+* `AbstractUser`을 상속받은 User 모델 생성
+    * 기본적으로 username, password 필드를 가지고 있기 때문에 내가 원하는 필드만 추가
+* 장고에서 기본 유저로 인식하기 위해 아래 코드 추가
+    ```python
+    AUTH_USER_MODEL = "users.User"
+    ```
+
+#### 💫 회원가입
+* forms.py 내에 `UserCreationForm`을 상속받은 폼 생성 후 사용
+    ```python
+    class SignUpForm(UserCreationForm):
+        class Meta(): # Django에서 모델에 대한 추가적인 메타데이터를 제공
+            model = # 폼이 연결된 모델 지정 
+            fields = # 폼에 표시될 필드를 지정
+    ```
+
+#### 💫 로그인
+* `AuthenticationForm` 사용 
+    ```python
+    from django.contrib.auth.forms import AuthenticationForm
+    ```
