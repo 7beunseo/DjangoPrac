@@ -6,31 +6,35 @@ from .forms import *
 
 # 회원가입
 def signup_view(request):
+    # 회원가입 폼 요청 
     if request.method == "GET":
         form = SignUpForm()
         return render(request, 'accounts/signup.html', {'form':form})
     
+    # 회원가입 데이터 유효성 검사
     form = SignUpForm(request.POST)
     if form.is_valid():
-        print("in")
         user = form.save()
         return redirect('login')
     else:
-        print("out")
         return render(request, 'accounts/signup.html', {'form': form})
 
 # 로그인
 def login_view(request):
-    if request.method=="GET":
+    # 로그인 폼 요청 
+    if request.method == "GET":
         return render(request, 'accounts/login.html', {'form':AuthenticationForm})
-    form=AuthenticationForm(request, data=request.POST)
+    
+    # 로그인 데이터 유효성 검사
+    form=AuthenticationForm(request, data = request.POST)
     if form.is_valid():
         login(request, form.user_cache)
         return redirect('index')
-    return render(request, 'accounts/login.html',{'form':form})
+    return render(request, 'accounts/login.html', {'form':form})
 
 # 로그아웃
 def logout_view(request):
+    # 로그아웃 로직 진행 
     if request.user.is_authenticated:
         logout(request)
     return redirect('index')

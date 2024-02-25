@@ -21,7 +21,7 @@ class cbv_list(ListView):
     model = Post 
     ordering = '-id'
 
-# create
+# post create
 def create(request):
     # post 요청인 경우
     if request.method == "POST":
@@ -35,12 +35,14 @@ def create(request):
         return redirect('posts-fbv')
     return render(request, 'crud/create.html')
 
-# detail
+# post detail
 def detail(request, id):
     post = get_object_or_404(Post, id = id)
-    return render(request, 'crud/detail.html', {'post': post})
+    comments = Comment.objects.filter(post = post)
 
-# update
+    return render(request, 'crud/detail.html', {'post': post, 'comments' : comments})
+
+# post update
 def update(request, id):
     post = get_object_or_404(Post, id = id)
     
@@ -52,8 +54,19 @@ def update(request, id):
     
     return render(request, 'crud/update.html', {'post':post})
 
-# delete
+# post delete
 def delete(request, id):
     post = get_object_or_404(Post, id = id)
     post.delete()
     return redirect('posts-fbv')
+
+# comment create - post 요청만 받음 
+def comment_create(request, post_id):
+    post = get_object_or_404(Post, id = post_id)
+    commnet = Comment.objects.create(
+        content = request.POST.get('content'),
+        post = post,
+        writer = request.user
+    )
+
+    return redirect('detail', post_id)

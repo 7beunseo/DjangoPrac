@@ -34,6 +34,40 @@
         a:hover {
             text-decoration: underline;
         }
+        label {
+            margin-top: 10px;
+            display: block;
+            font-weight: bold;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .comment-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+
     </style>
 </head>
 <body>
@@ -44,7 +78,35 @@
         <p>{{ post.content }}</p>
         <p>작성자: {{ post.writer }}</p>
         <p>작성일: {{ post.created_at }}, 수정일: {{ post.modified_at }}</p>
-        <p><a href="{% url 'update' post.id %}">수정하기</a><a href="{% url 'delete' post.id %}">삭제하기</a></p>
+
+        <!--작성자만 글 수정, 삭제 가능-->
+        {% if post.writer == request.user %}
+            <p>
+                <a href="{% url 'update' post.id %}">수정하기</a>
+                <a href="{% url 'delete' post.id %}">삭제하기</a>
+            </p>
+        {% endif %}
+
+        <hr>
+        <!--댓글 목록-->
+        {% for comment in comments %}
+        <div class="comment-box">
+            <p>{{ comment.content }}</p>
+            <p>작성자: {{ comment.writer }}</p>
+        </div>
+        {% empty %}
+            <p>댓글이 없습니다.</p>
+        {% endfor %}
+        
+        <!--댓글 달기-->
+        <form action="{% url 'comment-create' post.pk %}" method="post">
+            {% csrf_token %}
+            
+            <label for="content">CONTENT:</label><br>
+            <textarea id="content" name="content" rows="6"></textarea><br>
+        
+            <input type="submit" value="Submit">
+        </form>
     </div>
 
 </body>
