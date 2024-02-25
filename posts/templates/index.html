@@ -47,6 +47,7 @@
         {% if request.user.is_authenticated %}
             <p>환영합니다 {{ request.user.username }}님</p>
             <p><a href="{% url 'logout' %}">로그아웃</p>
+            <p><a href="{% url 'mypage' %}">MY PAGE</a></p>
         {% else %}
             <p><a href="{% url 'login' %}">누구세요? 로그인하세요</a></p>
         {% endif %}
