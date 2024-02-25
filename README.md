@@ -26,4 +26,26 @@ django-admin startproject djangoPrj .
 python manage.py runserver
 ```
 
+### 📌 앱 생성
+```bash
+python manage.py startapp posts
+```
+* `settings.py`의 `INSTALLED_APPS`에 등록한 앱 추가
+
+#### 💫 앱 생성 시 진행해야 하는 절차
+* url 연결
+    ```python
+    path('', include('posts.urls')), # '' 경로에 posts/urls.py와 연결 
+    ```
+* posts 앱 내 메서드 생성, 구체적인 로직 작성 
+* templates 폴더를 만든 후 view에서 지정한 템플릿 생성 (index.html)
+* posts 앱 내 urls.py 생성 및 view 연결
+    ```python
+    from django.urls import path
+    from .views import *; # 현재 경로 views.py의 모든 메서드를 불러옴 
+
+    urlpatterns = [
+        path('', index, name = "index"),
+    ]
+    ```
 
