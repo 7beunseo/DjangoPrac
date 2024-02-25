@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 
 # cbv 사용하기위해 임포트 필요
@@ -20,3 +20,39 @@ def fbv_list(request):
 class cbv_list(ListView):
     model = Post 
     ordering = '-id'
+
+# create
+def create(request):
+    # post 요청인 경우
+    if request.method == "POST":
+        post = Post.objects.create(
+            title = request.POST.get('title'),
+            content = request.POST.get('content'),
+            writer = request.POST.get('writer')
+        )
+        post.save()
+        return redirect('posts-fbv')
+    return render(request, 'crud/create.html')
+
+# detail
+def detail(request, id):
+    post = get_object_or_404(Post, id = id)
+    return render(request, 'crud/detail.html', {'post': post})
+
+# update
+def update(request, id):
+    post = get_object_or_404(Post, id = id)
+    
+    if request.method == "POST":
+        post.title = request.POST.get('title')
+        post.content = request.POST.get('content')
+        post.save()
+        return redirect('detail', id)
+    
+    return render(request, 'crud/update.html', {'post':post})
+
+# delete
+def delete(request, id):
+    post = get_object_or_404(Post, id = id)
+    post.delete()
+    return redirect('posts-fbv')

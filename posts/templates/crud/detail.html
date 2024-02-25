@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>Post Detail</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,35 +19,33 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h2 {
+        h2, h3 {
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         p {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
         a {
             color: #007bff;
             text-decoration: none;
+            margin-right: 10px;
         }
         a:hover {
             text-decoration: underline;
-        }
-        hr {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            border: 0;
-            border-top: 1px solid #ddd;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Index</h2>
-        <p><a href="{% url 'posts-fbv' %}">Go to FBV List</a></p>
-        <p><a href="{% url 'posts-cbv' %}">Go to CBV List</a></p>
-        <hr>
-        <p><a href="{% url 'create' %}">Create New Post</a></p>
+        <h2>POST DETAIL</h2>
+
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content }}</p>
+        <p>작성자: {{ post.writer }}</p>
+        <p>작성일: {{ post.created_at }}, 수정일: {{ post.modified_at }}</p>
+        <p><a href="{% url 'update' post.id %}">수정하기</a><a href="{% url 'delete' post.id %}">삭제하기</a></p>
     </div>
+
 </body>
 </html>
