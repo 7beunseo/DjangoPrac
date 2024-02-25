@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Page</title>
+    <title>My Likes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,32 +19,30 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h2 {
-            color: #333;
-            text-align: center;
-        }
-        p {
-            margin-bottom: 10px;
-        }
-        a {
-            display: block;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            text-align: center;
+        .post {
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
             border-radius: 5px;
+            background-color: #f9f9f9;
         }
-        a:hover {
-            background-color: #0056b3;
+        .post-title {
+            font-weight: bold;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>My Page</h2>
-        <p><a href="{% url 'my-likes' %}">내가 좋아요 누른 글</a></p>
-        <p><a href="{% url 'my-posts' %}">내가 작성한 글</a></p>
+        <h2>My Posts</h2>
+        {% for post in posts %}
+            <div class="post">
+                <p class="post-title"><a href="{% url 'detail' post.id %}">TITLE : {{ post.title }}</a></p>
+                <p>CONTENT : {{ post.content }}</p>
+            </div>
+        {% empty %}
+            <p>작성한 글이 없습니다.</p>
+        {% endfor %}
     </div>
 </body>
 </html>
