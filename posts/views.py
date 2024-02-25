@@ -70,3 +70,27 @@ def comment_create(request, post_id):
     )
 
     return redirect('detail', post_id)
+
+# add or remove post like
+def post_likes(request, post_id, url):
+    post = get_object_or_404(Post, id = post_id)
+
+    if request.user in post.likes.all(): # post.likes는 ManyToManyField의 관련 매니저 객체, 반복가능하지 않음 
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+
+    if(url == "detail"):
+        return redirect(url, post_id)
+    return redirect(url)
+
+# add or remove comment like
+def comment_likes(request, post_id, comment_id):
+    comment = get_object_or_404(Comment, id = comment_id)
+
+    if request.user in comment.likes.all():
+        comment.likes.remove(request.user)
+    else:
+        comment.likes.add(request.user)
+
+    return redirect('detail', post_id)

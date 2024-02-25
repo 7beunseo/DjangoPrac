@@ -10,5 +10,8 @@ urlpatterns = [
     path('update/<int:id>/', update, name = "update"),
     path('delete/<int:id>/', delete, name = "delete"),
     
-    path('comment-create/<int:post_id>/', comment_create, name = "comment-create")
+    path('comment-create/<int:post_id>/', comment_create, name = "comment-create"),
+
+    path('post-likes/<int:post_id>/<str:url>/', post_likes, name = "post-likes"),
+    path('comment-likes/<int:post_id>/<int:comment_id>/', comment_likes, name = "comment-likes"),
 ]

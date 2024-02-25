@@ -137,7 +137,7 @@ class cbv_list(ListView):
 ```python
 writer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) # User 다대일 관계 
 ```
-* on_delete : ForeignKey 필드가 참조하는 객체가 삭제될 때 어떻게 동작할지를 지정
+* `on_delete` : ForeignKey 필드가 참조하는 객체가 삭제될 때 어떻게 동작할지를 지정
     * `models.CASCADE`: 참조하는 객체가 삭제될 때, 해당 객체와 연결된 모든 객체도 함께 삭제
     * `models.PROTECT`: 참조하는 객체가 삭제될 때, 참조하는 객체와 연결된 객체가 있는 경우 삭제를 방지
     * `models.SET_NULL`: 참조하는 객체가 삭제될 때, 해당 필드를 NULL로 설정 (해당 필드가 null을 허용해야 함)
@@ -145,3 +145,19 @@ writer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) # User �
     * `models.SET()`: 참조하는 객체가 삭제될 때, 특정 함수를 실행하여 값을 설정
 
 ![alt text](readme_media/image.png)
+
+### 📌 다대다 - ManyToMany
+```python
+likes = models.ManyToManyField(get_user_model(), related_name="post_like") # User 다대다 관계 
+```
+* post.likes 를 통해 post_user 중간 테이블 참조 
+* `related_name` : 역참조를 위한 이름을 지정 ( user.post_like를 통해 post_user 중간 테이블 참조 )
+* `through` : ManyToMany 관계에 대한 중간 모델을 지정
+
+![alt text](readme_media/image2.png)
+
+```python
+if request.user in post.likes.all()
+```
+* `post.likes`는 ManyToManyField의 관련 매니저 객체이므로 `request.user in post.likes`로 확인할 수 없음
+* `post.likes.all()`을 사용하여 ManyToManyField에 연결된 모든 사용자를 가져와 해당 사용자가 이미 좋아요를 했는지 확인해야 함 

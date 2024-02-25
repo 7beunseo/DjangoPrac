@@ -67,6 +67,35 @@
             margin-bottom: 10px;
             background-color: #f9f9f9;
         }
+        .comment-info {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .writer {
+            margin: 0;
+        }
+
+        .likes {
+            margin: 0;
+        }
+        .like-link {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        .like-icon {
+            margin-right: 5px; 
+            font-size: 16px; 
+        }
+
+        .like-count {
+            font-size: 14px;
+            color: #777; 
+        }
+
 
     </style>
 </head>
@@ -77,6 +106,19 @@
         <h3>{{ post.title }}</h3>
         <p>{{ post.content }}</p>
         <p>작성자: {{ post.writer }}</p>
+        <!--포스트 좋아요-->
+        <p>
+            <a href="{% url 'post-likes' post.id 'detail' %}" class="like-link">
+                <span class="like-icon">
+                    {% if request.user in post.likes.all %}
+                        <span style="font-size: 25px">♥</span>
+                    {% else %}
+                        ♡ 
+                    {% endif %}
+                </span>
+                <span class="like-count">{{ post.likes.count }}</span>
+            </a>
+        </p>   
         <p>작성일: {{ post.created_at }}, 수정일: {{ post.modified_at }}</p>
 
         <!--작성자만 글 수정, 삭제 가능-->
@@ -92,7 +134,22 @@
         {% for comment in comments %}
         <div class="comment-box">
             <p>{{ comment.content }}</p>
-            <p>작성자: {{ comment.writer }}</p>
+            <div class="comment-info">
+                <p class="writer">{{ comment.writer }}</p>
+                <!--댓글 좋아요-->
+                <p>
+                    <a href="{% url 'comment-likes' post.id comment.id %}" class="comment-link">
+                        <span class="like-icon">
+                            {% if request.user in comment.likes.all %}
+                                <span style="font-size: 25px">♥</span>
+                            {% else %}
+                                ♡ 
+                            {% endif %}
+                        </span>
+                        <span class="like-count">{{ comment.likes.count }}</span>
+                    </a>
+                </p>  
+            </div>
         </div>
         {% empty %}
             <p>댓글이 없습니다.</p>
