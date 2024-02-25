@@ -161,3 +161,19 @@ if request.user in post.likes.all()
 ```
 * `post.likes`는 ManyToManyField의 관련 매니저 객체이므로 `request.user in post.likes`로 확인할 수 없음
 * `post.likes.all()`을 사용하여 ManyToManyField에 연결된 모든 사용자를 가져와 해당 사용자가 이미 좋아요를 했는지 확인해야 함 
+
+### 📌 정적 경로 및 미디어 파일 경로
+```python
+import os
+MEDIA_URL = '/media/'
+MEDIA_ROOT=os.path.join(BASE_DIR, '_media')
+```
+```python
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
