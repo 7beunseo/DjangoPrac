@@ -63,6 +63,11 @@
             <label for="content">CONTENT:</label><br>
             <textarea id="content" name="content" rows="6"></textarea><br>
 
+            {% for tag in tags %}
+            <input type="checkbox" name="tags" value="{{ tag.name }}">{{ tag.name }}
+            {% endfor %}
+            <br><br><br>
+
             <input type="submit" value="Submit">
         </form>
     </div>

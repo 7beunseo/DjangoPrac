@@ -23,17 +23,27 @@ class cbv_list(ListView):
 
 # post create
 def create(request):
+    tags = Tag.objects.all()
     # post 요청인 경우
     if request.method == "POST":
+        # 태그 리스트
+        selected_tags = request.POST.getlist("tags")
+
         post = Post.objects.create(
             title = request.POST.get('title'),
             content = request.POST.get('content'),
             # 현재 유저
             writer = request.user
         )
+
+        # 태그 다대다 연결 
+        for selected_tag in selected_tags:
+            tag = Tag.objects.get(name = selected_tag)
+            post.tags.add(tag)
+
         post.save()
         return redirect('posts-fbv')
-    return render(request, 'crud/create.html')
+    return render(request, 'crud/create.html', {'tags':tags})
 
 # post detail
 def detail(request, id):
