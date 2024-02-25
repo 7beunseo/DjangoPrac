@@ -44,6 +44,13 @@
 <body>
     <div class="container">
         <h2>Index</h2>
+        {% if request.user.is_authenticated %}
+            <p>환영합니다 {{ request.user.username }}님</p>
+            <p><a href="{% url 'logout' %}">로그아웃</p>
+        {% else %}
+            <p><a href="{% url 'login' %}">누구세요? 로그인하세요</a></p>
+        {% endif %}
+        <hr>
         <p><a href="{% url 'posts-fbv' %}">Go to FBV List</a></p>
         <p><a href="{% url 'posts-cbv' %}">Go to CBV List</a></p>
         <hr>
