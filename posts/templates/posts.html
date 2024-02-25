@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>list.html입니다</h2>
+
+    {% for post in posts %}
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content }}</p>
+        <p>{{ post.author }}</p>
+        <p>작성일 : {{ post.created_at }}, 수정일 : {{ post.modified_at }}</p>
+        <hr>
+    {% endfor %}
+    
+</body>
+</html>
