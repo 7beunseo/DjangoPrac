@@ -191,3 +191,8 @@ python -m pip install Pillow
 ```html
 <input type="file" name="profile"> <!--input 태그로 입력받을 시 type file로 지정-->
 ```
+
+### 📌 pip 패키지 목록 requirements.txt 파일 생성
+```bash
+pip freeze > requirements.txt
+```
