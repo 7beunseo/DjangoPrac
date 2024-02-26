@@ -12,7 +12,7 @@ def signup_view(request):
         return render(request, 'accounts/signup.html', {'form':form})
     
     # 회원가입 데이터 유효성 검사
-    form = SignUpForm(request.POST)
+    form = SignUpForm(request.POST, request.FILES)
     if form.is_valid():
         user = form.save()
         return redirect('login')

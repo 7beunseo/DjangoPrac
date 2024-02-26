@@ -166,7 +166,7 @@ if request.user in post.likes.all()
 ```python
 import os
 MEDIA_URL = '/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR, '_media')
+MEDIA_ROOT=os.path.join(BASE_DIR, 'media') # media 파일이 새로 생성됨 
 ```
 ```python
 from django.contrib import admin
@@ -176,4 +176,18 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+```bash
+python -m pip install Pillow
+```
+#### 💫 static
+```html
+{% load static %}
+"{% static 'heart/intro.png' %}" <!--/static/heart/intro.png-->
+```
+#### 💫 media
+* 폼으로 사진을 입력받을 시 `enctype="multipart/form-data"` 타입을 설정해야 함
+* 후에 `객체.필드.url`로 접근
+```html
+<input type="file" name="profile"> <!--input 태그로 입력받을 시 type file로 지정-->
 ```

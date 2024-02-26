@@ -53,7 +53,7 @@
 <body>
     <div class="container">
         <h2>SIGN-UP</h2>
-        <form method="post" action="">
+        <form method="post" action="" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">SIGN-UP</button>
