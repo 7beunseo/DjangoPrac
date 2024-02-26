@@ -163,10 +163,13 @@ if request.user in post.likes.all()
 * `post.likes.all()`을 사용하여 ManyToManyField에 연결된 모든 사용자를 가져와 해당 사용자가 이미 좋아요를 했는지 확인해야 함 
 
 ### 📌 정적 경로 및 미디어 파일 경로
+* 파일은 데이터베이스에 저장하지 않으며 장고는 파일 저장소를 지정하고(settings.py), 그곳에 파일을 저장한 후 파일이 위치한 주소 경로를 데이터베이스에 저장함 
 ```python
-import os
-MEDIA_URL = '/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR, 'media') # media 파일이 새로 생성됨 
+# settings.py
+
+MEDIA_URL = "/media/" # 업로드되는 파일을 조회할 경로를 선언
+MEDIA_ROOT = os.path.join(BASE_DIR, "media") 
+# 실제 서버가 수행되었을 때(runserver) 파일에 대한 접근이 요청되면 django에게 실제 파일이 위치한 곳이 어딘지 알려주기 위해 선언
 ```
 ```python
 from django.contrib import admin
