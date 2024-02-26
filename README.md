@@ -135,8 +135,9 @@ class cbv_list(ListView):
 
 ### 📌 다대일 - ForeignKey
 ```python
-writer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) # User 다대일 관계 
+post = models.ForeignKey(to="Post",  on_delete=models.CASCADE) # Post 다대일 관계
 ```
+* `to` : 모델 간 관계가 1:N일 때 1에 해당하는 쪽에 to 옵션을 줌. to=Post로 객체를 직접 매핑할 수도 있지만 가급적 문자열로 모델 클래스명을 매핑해야 순환참조가 발생하지 않음
 * `on_delete` : ForeignKey 필드가 참조하는 객체가 삭제될 때 어떻게 동작할지를 지정
     * `models.CASCADE`: 참조하는 객체가 삭제될 때, 해당 객체와 연결된 모든 객체도 함께 삭제
     * `models.PROTECT`: 참조하는 객체가 삭제될 때, 참조하는 객체와 연결된 객체가 있는 경우 삭제를 방지

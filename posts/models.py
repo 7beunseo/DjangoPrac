@@ -27,7 +27,7 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add = True) # 레코드 생성 시각으로 자동 저장
     modified_at = models.DateTimeField(auto_now=True) # 레코드가 저장될 때마다 현재 시간 갱신 
     writer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) # User 다대일 관계 
-    post = models.ForeignKey(Post,  on_delete=models.CASCADE) # Post 다대일 관계
+    post = models.ForeignKey(to="Post",  on_delete=models.CASCADE) # Post 다대일 관계
     likes = models.ManyToManyField(get_user_model(), related_name="comment_like") # 좋아요 
 
     def __str__(self):
@@ -35,6 +35,6 @@ class Comment(models.Model):
     
 
 class TagPost(models.Model): # Tag, Post 다대다 관계 시 중간 테이블
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    tag = models.ForeignKey(to="Tag", on_delete=models.CASCADE)
+    post = models.ForeignKey(to="Post", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True) # 추가된 필드 

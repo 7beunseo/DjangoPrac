@@ -55,7 +55,11 @@
         <img src="{% static 'heart/intro.png' %}" width="500px">
 
         {% if request.user.is_authenticated %}
-            <p>환영합니다 {{ request.user.username }}님 <img class="profile-image" src="{{ request.user.profile.url }}"></p> 
+            <p>환영합니다 {{ request.user.username }}님 
+                {% if request.user.profile %}
+                    <img class="profile-image" src="{{ request.user.profile.url }}">
+                {% endif %}
+            </p> 
             <p><a href="{% url 'logout' %}">로그아웃</a></p>
             <p><a href="{% url 'mypage' %}">MY PAGE</a></p>
         {% else %}
