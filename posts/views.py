@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
+from users.models import Follow
 
 # cbv 사용하기위해 임포트 필요
 from django.views.generic import ListView
@@ -49,8 +50,8 @@ def create(request):
 def detail(request, id):
     post = get_object_or_404(Post, id = id)
     comments = Comment.objects.filter(post = post)
-
-    return render(request, 'crud/detail.html', {'post': post, 'comments' : comments})
+    follow_status = Follow.objects.check_follow_status(request.user, post.writer)
+    return render(request, 'crud/detail.html', {'post': post, 'comments' : comments, 'follow_status' : follow_status})
 
 # post update
 def update(request, id):

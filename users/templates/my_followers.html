@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .follower {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .follower img {
+            max-width: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .follower h2 {
+            margin: 0;
+            color: #333;
+        }
+        .empty-message {
+            color: #777;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    {% if followers %}
+        {% for follower in followers %}
+            <div class="follower">
+                {% if follower.profile %}
+                    <img src="{{ follower.profile.url }}" alt="Profile Picture"><br>
+                {% endif %}
+                <h2>USERNAME: {{ follower.username }}</h2>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="empty-message">팔로잉하는 사용자가 없습니다.</p>
+    {% endif %}
+</body>
+</html>

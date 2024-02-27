@@ -200,3 +200,20 @@ python -m pip install Pillow
 ```bash
 pip freeze > requirements.txt
 ```
+
+### 📌 커스텀 매니저 만들기
+#### 💫 매니저
+```python
+class MyModel(models.Model):
+    # ... 필드 정의
+    objects = ModelManager()
+```
+* 지금까지 models.Model을 상속받은 모든 클래스에는 `objects` 라는 장고의 매니저 모듈이 들어가 있음 
+* 장고가 구현해놓은 모델의 클래스를 상속받는 것만으로도 매니저라는 객체를 사용할 수 있음
+```py
+class CustomManager(models.Manager):
+    def sample_query(self):
+        return self.get_queryset().filter(...) # 후에 모델명.objects.sample_query()로 접근
+```
+* models.Manager을 상속받으면 커스텀 매니저를 만들 수 있음
+* 생성 후 적용하고자 하는 모델에 `objects = CustomManager()` 설정해주면 objects로 접근할 때 커스텀 매니저를 사용할 수 있음 

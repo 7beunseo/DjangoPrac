@@ -18,3 +18,15 @@ class User(AbstractUser):
     def __str__(self):
         return f'{self.username}'
     
+class FollowManager(models.Manager):
+    def check_follow_status(self, follower, following):
+        return self.get_queryset().filter(follower=follower, following=following)
+
+    
+class Follow(models.Model):
+    follower = models.ForeignKey(to="User", related_name = "follower", on_delete = models.CASCADE) # 팔로우 ㅏ는 사람
+    following = models.ForeignKey(to="User", related_name = "following", on_delete = models.CASCADE) # 팔로우 받는 사람 
+
+    objects = FollowManager()
+
+    
